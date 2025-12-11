@@ -1,0 +1,81 @@
+{
+	"$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.23/MicrosoftTeams.schema.json",
+	"version": "1.0.0",
+	"manifestVersion": "1.23",
+	"id": "${{TEAMS_APP_ID}}",
+	"name": {
+		"short": "Kivik dev",
+		"full": "Kivik ai agent bot"
+	},
+	"developer": {
+		"name": "Aivisen",
+		"mpnId": "",
+		"websiteUrl": "https://www.aivisen.com/",
+		"privacyUrl": "https://www.aivisen.com/",
+		"termsOfUseUrl": "https://www.aivisen.com/#security"
+	},
+	"description": {
+		"short": "Aivisen",
+		"full": "Aivisen"
+	},
+	"icons": {
+		"outline": "outline.png",
+		"color": "color.png"
+	},
+	"accentColor": "#FFFFFF",
+	"configurableTabs": [
+		{
+			"configurationUrl": "https://www.aivisen.com",
+			"canUpdateConfiguration": false,
+			"scopes": [
+				"groupChat"
+			]
+		}
+	],
+	"staticTabs": [
+		{
+			"entityId": "conversations",
+			"scopes": [
+				"personal"
+			]
+		},
+		{
+			"entityId": "about",
+			"scopes": [
+				"personal"
+			]
+		}
+	],
+	"bots": [
+		{
+			"botId": "${{BOT_ID}}",
+			"scopes": [
+				"personal",
+				"team",
+				"groupChat"
+			],
+			"supportsFiles": false,
+			"isNotificationOnly": false,
+			"commandLists": [
+				{
+					"scopes": [
+						"personal",
+						"team",
+						"groupChat"
+					],
+					"commands": [
+						{
+							"title": "Hi",
+							"description": "Say hi to the bot."
+						},
+						{
+							"title": "/reset",
+							"description": "Delete conversation state."
+						}
+					]
+				}
+			]
+		}
+	],
+	"validDomains": []
+}
