@@ -13,6 +13,7 @@ export class ArticleSelectionHandler implements IActionHandler {
 
   async handle(context: any, activity: any, data: any): Promise<boolean> {
     const articleId = data.articleId;
+    
     if (!articleId) {
       return false;
     }
@@ -30,13 +31,22 @@ export class ArticleSelectionHandler implements IActionHandler {
       activity: activity,
     };
 
-    console.log("Sending article selection to backend:", articleMessageData);
+    console.log("[ArticleHandler] Sending article selection to backend:", articleMessageData);
 
-    await this.backendService.sendChatMessage(articleMessageData).catch((error) => {
+    try {
+      await this.backendService.sendChatMessage(articleMessageData);
+      console.log("[ArticleHandler] Successfully sent article selection to backend");
+      
+      // Send a concise confirmation
+      await context.send(`Marked as resolved. Thanks!`);
+    } catch (error) {
       console.error("[ArticleHandler] Failed to send article selection to backend:", error);
-    });
+      await context.send({
+        type: "message",
+        text: `❌ Sorry, I encountered an error while marking the article. Please try again.`,
+      });
+    }
 
-    await context.send(`Article selected! Sending article ID ${articleId} to backend.`);
     return true;
   }
 }

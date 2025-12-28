@@ -2,80 +2,28 @@
 	"$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.23/MicrosoftTeams.schema.json",
 	"version": "1.0.0",
 	"manifestVersion": "1.23",
-	"id": "${{TEAMS_APP_ID}}",
+	"id": "0aff5f5a-a93e-4787-ac07-387ae3b0feda",
 	"name": {
-		"short": "Kivik dev",
-		"full": "Kivik ai agent bot"
+	  "short": "Kivik new",
+	  "full": "Kivik AI agent app"
 	},
 	"developer": {
-		"name": "Aivisen",
-		"mpnId": "",
-		"websiteUrl": "https://www.aivisen.com/",
-		"privacyUrl": "https://www.aivisen.com/",
-		"termsOfUseUrl": "https://www.aivisen.com/#security"
+	  "name": "https://www.aivisen.com/",
+	  "websiteUrl": "https://www.aivisen.com/",
+	  "privacyUrl": "https://www.aivisen.com/",
+	  "termsOfUseUrl": "https://www.aivisen.com/"
 	},
 	"description": {
-		"short": "Aivisen",
-		"full": "Aivisen"
+	  "short": "Aivisen Oy",
+	  "full": "Aivisen Oy agent AI app"
 	},
 	"icons": {
-		"outline": "outline.png",
-		"color": "color.png"
+	  "outline": "outline.png",
+	  "color": "color.png"
 	},
-	"accentColor": "#FFFFFF",
-	"configurableTabs": [
-		{
-			"configurationUrl": "https://www.aivisen.com",
-			"canUpdateConfiguration": false,
-			"scopes": [
-				"groupChat"
-			]
-		}
-	],
-	"staticTabs": [
-		{
-			"entityId": "conversations",
-			"scopes": [
-				"personal"
-			]
-		},
-		{
-			"entityId": "about",
-			"scopes": [
-				"personal"
-			]
-		}
-	],
-	"bots": [
-		{
-			"botId": "${{BOT_ID}}",
-			"scopes": [
-				"personal",
-				"team",
-				"groupChat"
-			],
-			"supportsFiles": false,
-			"isNotificationOnly": false,
-			"commandLists": [
-				{
-					"scopes": [
-						"personal",
-						"team",
-						"groupChat"
-					],
-					"commands": [
-						{
-							"title": "Hi",
-							"description": "Say hi to the bot."
-						},
-						{
-							"title": "/reset",
-							"description": "Delete conversation state."
-						}
-					]
-				}
-			]
-		}
-	],
-	"validDomains": []
-}
+	"accentColor": "#ffffff",
+	"validDomains": [],
+	"webApplicationInfo": {
+	  "id": "249a4cd9-abd5-4a4b-9899-65de9ffaf61f"
+	}
+  }

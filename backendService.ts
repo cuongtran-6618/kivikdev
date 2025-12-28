@@ -22,7 +22,7 @@ class BackendService {
 
   constructor(config?: BackendServiceConfig) {
     const {
-      baseUrl = "http://localhost:3000",
+      baseUrl = process.env.BOT_ENDPOINT || "http://localhost:3001",
       timeout = 5000,
       headers = { "Content-Type": "application/json" },
       requestInterceptor,
@@ -54,14 +54,9 @@ class BackendService {
    */
   async sendChatMessage(messageData: MessageData): Promise<BackendResponse> {
     try {
-      /*
-      console.log(`[BackendService] Sending message to ${this.baseUrl}/chat`);
-      
-      console.log(`[BackendService] Successfully sent message. Response:`, response.data);
-      */
-      //const response = await this.client.post<BackendResponse>("https://dummyjson.com/test", messageData);
-      console.log(`[BackendService] Sending message to ${this.baseUrl}/chat`, messageData);
-      const response = await this.client.post("http://localhost:3001/chat", { message: messageData.text });
+      const botEndpoint = process.env.BOT_ENDPOINT || "http://localhost:3001/chat";
+      console.log(`[BackendService] Sending message to ${botEndpoint}`, messageData);
+      const response = await this.client.post(botEndpoint, { message: messageData.text });
       console.log(`[BackendService] Successfully sent message. Response:`, response.data);
       return {
         success: true,

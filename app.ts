@@ -50,7 +50,7 @@ const app = createApp({
 // Register message handler
 app.on("message", async (context) => {
   const activity = context.activity;
-  console.log("[App] Received message:", activity);
+  //console.log("[App] Received message:", activity);
 
   try {
     await messageProcessor.process(context, activity);

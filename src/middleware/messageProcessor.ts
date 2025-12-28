@@ -103,15 +103,23 @@ export class MessageProcessor {
       return null;
     });
 
-    console.log("[MessageProcessor] Sent message to backend:", result);
-
-    if (!result || !result.data) {
-      // Default echo behavior if no backend response
+    // Check if result is null or unsuccessful
+    if (!result || !result.success) {
+      console.error("[MessageProcessor] Backend service returned null or unsuccessful result:", result);
       await this.handleDefaultEcho(context, activity, text);
       return;
     }
 
     const data = result.data as BackendResponseData;
+    
+    // Check if data exists
+    if (!data) {
+      console.error("[MessageProcessor] Backend response data is null or undefined");
+      await this.handleDefaultEcho(context, activity, text);
+      return;
+    }
+
+    console.log("[MessageProcessor] Backend response data:", JSON.stringify(data, null, 2));
 
     // Handle incident creation
     if (data.type === "incident_created") {
@@ -130,7 +138,15 @@ export class MessageProcessor {
         url: article.url,
       }));
 
-      await KBSuggestionsCardBuilder.sendCard(context, articles);
+      console.log("[MessageProcessor] KB suggestions articles:", articles);
+
+      try {
+        await KBSuggestionsCardBuilder.sendCard(context, articles);
+        console.log("[MessageProcessor] Successfully sent KB suggestions card");
+      } catch (error) {
+        console.error("[MessageProcessor] Failed to send KB suggestions card:", error);
+        await context.send("I found some knowledge base articles, but encountered an error displaying them.");
+      }
       return;
     }
 
