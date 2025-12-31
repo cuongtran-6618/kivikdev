@@ -24,6 +24,8 @@ export interface Article {
   id: string;
   title: string;
   url: string;
+  /** Short summary or excerpt to show in the accordion */
+  summary?: string;
   sys_id?: string;
 }
 

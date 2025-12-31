@@ -28,6 +28,9 @@ export class KBSuggestionsCardBuilder {
 
     // Add each article with simplified, intuitive UI
     articles.forEach((article, index) => {
+      const summaryText = article.summary || "No summary available. Lorem ipsum dolor sit amet, consectetur adipiscing elit.. Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+      const truncatedText = summaryText.length > 50 ? summaryText.slice(0, 50) + "…" : summaryText;
+
       cardBody.push({
         type: "Container",
         separator: index > 0,
@@ -38,30 +41,123 @@ export class KBSuggestionsCardBuilder {
           url: article.url,
         },
         items: [
-          // Clickable title - most intuitive way to open article
+          // Title row with inline chevron toggle
           {
-            type: "TextBlock",
-            text: article.title,
-            weight: "Bolder",
-            size: "Medium",
-            wrap: true,
-            spacing: "Small",
-            color: "Accent",
-          },
-          // Single, clear action button
-          {
-            type: "ActionSet",
-            spacing: "Small",
-            actions: [
+            type: "ColumnSet",
+            columns: [
               {
-                type: "Action.Submit",
-                title: "This solved my issue",
-                data: {
-                  action: "select_article",
-                  articleId: article.id,
-                  articleTitle: article.title,
-                },
-                style: "positive",
+                type: "Column",
+                width: "stretch",
+                items: [
+                  {
+                    type: "TextBlock",
+                    text: article.title,
+                    weight: "Bolder",
+                    size: "Medium",
+                    wrap: true,
+                    spacing: "Small",
+                    color: "Accent",
+                  },
+                ],
+              },
+              {
+                type: "Column",
+                width: "auto",
+                verticalContentAlignment: "center",
+                items: [
+                // Inline check button (replaces "This solved my issue")
+                  {
+                    type: "ActionSet",
+                    actions: [
+                      {
+                        type: "Action.Submit",
+                        title: "✓",
+                        data: {
+                          action: "select_article",
+                          articleId: article.id,
+                          articleTitle: article.title,
+                        },
+                        style: "positive",
+                      },
+                    ],
+                  },
+                  {
+                    type: "Container",
+                    id: `toggleCollapsedContainer_${article.id}`,
+                    items: [
+                      {
+                        type: "ActionSet",
+                        actions: [
+                          {
+                            type: "Action.ToggleVisibility",
+                            title: "▶",
+                            tooltip: "Show summary",
+                            targetElements: [
+                              `summary_truncated_${article.id}`,
+                              `summary_full_${article.id}`,
+                              `toggleCollapsedContainer_${article.id}`,
+                              `toggleExpandedContainer_${article.id}`,
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    type: "Container",
+                    id: `toggleExpandedContainer_${article.id}`,
+                    isVisible: false,
+                    items: [
+                      {
+                        type: "ActionSet",
+                        actions: [
+                          {
+                            type: "Action.ToggleVisibility",
+                            title: "▼",
+                            tooltip: "Hide summary",
+                            targetElements: [
+                              `summary_truncated_${article.id}`,
+                              `summary_full_${article.id}`,
+                              `toggleCollapsedContainer_${article.id}`,
+                              `toggleExpandedContainer_${article.id}`,
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },                  
+                ],
+              },
+            ],
+          },
+          // Truncated summary (visible) and full summary (hidden)
+          {
+            type: "Container",
+            id: `summary_truncated_${article.id}`,
+            isVisible: true,
+            spacing: "Small",
+            items: [
+              {
+                type: "TextBlock",
+                text: truncatedText,
+                wrap: true,
+                isSubtle: true,
+                size: "Small",
+              },
+            ],
+          },
+          {
+            type: "Container",
+            id: `summary_full_${article.id}`,
+            isVisible: false,
+            spacing: "Small",
+            items: [
+              {
+                type: "TextBlock",
+                text: summaryText,
+                wrap: true,
+                isSubtle: true,
+                size: "Small",
               },
             ],
           },
